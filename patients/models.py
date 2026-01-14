@@ -43,3 +43,19 @@ class Patient(models.Model):
 
     def __str__(self):
         return f"{self.first_name} - {self.last_name}"
+
+    @classmethod
+    def total_patients(cls):
+        return cls.objects.count()
+
+    @classmethod
+    def total_active(cls):
+        return cls.objects.filter(is_active=True).count()
+
+    @classmethod
+    def total_male(cls):
+        return cls.objects.filter(gender="M").count()
+
+    @classmethod
+    def total_female(cls):
+        return cls.objects.filter(gender="F").count()
