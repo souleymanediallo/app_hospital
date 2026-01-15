@@ -17,6 +17,7 @@
                         <th>Email</th>
                         <th>Date de naissance</th>
                         <th>Sexe</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -27,7 +28,11 @@
                         <td>{{ patient.email }}</td>
                         <td>{{ patient.date_of_birth }}</td>
                         <td>{{ patient.gender }}</td>
-
+                        <td>
+                            <a href="{% url 'patients:patient_detail' patient.pk %}" class="btn btn-sm btn-info">
+                                Voir détails
+                            </a>
+                        </td>
                     </tr>
                     {% endfor %}
                     </tbody>
