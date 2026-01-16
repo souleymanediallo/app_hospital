@@ -1,7 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from django.shortcuts import render, get_object_or_404, redirect
 from datetime import date
 
 from .models import Patient
+from .forms import PatientForm
+
 
 # Create your views here.
 def home(request):
@@ -41,4 +44,20 @@ def patient_detail(request, pk):
     return render(request, "patients/patient_detail.html", context)
 
 
+def patient_form(request):
+    if request.method == "POST":
+        form = PatientForm(request.POST, request.FILES)
+        if form.is_valid():
+            patient = form.save()
+            messages.success(request, "Votre patient a été ajouté avec succés.")
+            return redirect("patients:patient_detail", pk=patient.pk)
+
+        messages.error(request, "Veuillez corriger les erreurs dans le formulaire.")
+
+    else:
+        form = PatientForm()
+
+    context = {"form": form}
+
+    return render(request, "patients/patient_confirm_form.html", context)
 
